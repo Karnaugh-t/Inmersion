@@ -19,10 +19,8 @@ class GUI_Elements {
     return kb.getValueS();
   }
   
-  void CreateKnob(int posX, int posY, int sizeX, int sizeY){
-   textAlign(CENTER);
-   textSize(24);
-   kb = new GKnob (theApplet,posX,posY,sizeX,sizeY,0.8);
+  void CreateKnob(int posX, int posY, int sizeX, int sizeY){sY,sizeX,sizeY,0.8);
+
   }
 
   void CreateButton(String buttonText) {

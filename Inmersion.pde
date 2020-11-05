@@ -1,3 +1,4 @@
+
 import java.awt.Font;
 GUI_Elements[] knob = new GUI_Elements[3];
 
@@ -30,10 +31,10 @@ public class GUI extends PApplet {
   void setup() {
     G4P.setCursor(CROSS);
 
+    for (int i = 0; i < knob.length; i++) {
+      knob[i] = new GUI_Elements(this);
+    }
 
-    knob[0] = new GUI_Elements(this);
-    knob[1] = new GUI_Elements(this);
-    knob[2] = new GUI_Elements(this);
     Elements();
   }
 
@@ -51,9 +52,12 @@ public class GUI extends PApplet {
 
   public void Elements() {
     //Knobs
-    knob[0].CreateKnob(200, 200, 200, 200);
-    knob[1].CreateKnob(600, 200, 200, 200);
-    knob[2].CreateKnob(1000, 200, 200, 200);
+    for (int i = 0; i < knob.length; i++) {
+      textAlign(CENTER);
+      textSize(24);
+      knob[i].CreateKnob((i*420)+ 70, 50, 300, 300);
+    }
+
 
     //Buttons
     //bt1 = new GButton(this, 70, 520, 120, 120, "1");
