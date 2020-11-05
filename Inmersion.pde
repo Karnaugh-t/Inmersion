@@ -1,12 +1,13 @@
 
 import java.awt.Font;
 GUI_Elements[] knob = new GUI_Elements[3];
+GUI_Elements text = new GUI_Elements(this);
 
 int bgcol = 22;
 
-String value1 = "";
-String value2 = "";
-String value3 = "";
+String vColor = "";
+String intensity = "";
+String variation = "";
 
 
 public void settings() { 
@@ -18,9 +19,6 @@ public void settings() {
 
 void draw() {
   background(0);
-  text(value1, 635, 605);
-  text(value2, 635, 625);
-  text(value3, 635, 645);
 } 
 
 public class GUI extends PApplet {
@@ -40,9 +38,15 @@ public class GUI extends PApplet {
 
   void draw() {
     background(bgcol);
-    value1 = knob[0].getKnobValue();
-    value2 = knob[1].getKnobValue();
-    value3 = knob[2].getKnobValue();
+    
+    vColor = knob[0].getKnobValue();
+    intensity = knob[1].getKnobValue();
+    variation = knob[2].getKnobValue();
+
+
+    text(vColor, 635, 605);
+    text(intensity, 635, 625);
+    text(variation, 635, 645);
   }
 
   //public void handleButtonEvents(GButton button, GEvent event) {
@@ -52,9 +56,9 @@ public class GUI extends PApplet {
 
   public void Elements() {
     //Knobs
+
     for (int i = 0; i < knob.length; i++) {
-      textAlign(CENTER);
-      textSize(24);
+
       knob[i].CreateKnob((i*420)+ 70, 50, 300, 300);
     }
 
