@@ -10,8 +10,8 @@ class GUI_Elements {
     this.theApplet = theApplet;
   }
   
-  String getKnobValue(){
-    return kb.getValueS();
+  Float getKnobValue(){
+    return kb.getValueF();
   }
   
   void CreateKnob(int posX, int posY, int sizeX, int sizeY){
@@ -23,9 +23,4 @@ class GUI_Elements {
     bt = new GButton(theApplet, 70, 520, 120, 120, buttonText);
   }
   
-  void createText(String value, String text, int posX,int posY){
-      textAlign(CENTER);
-      textSize(24);
-      text(value+"\n"+text, posX, posY);
-  }
 }
