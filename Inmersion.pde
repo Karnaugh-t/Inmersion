@@ -1,3 +1,10 @@
+import ddf.minim.signals.*;
+import ddf.minim.*;
+import ddf.minim.analysis.*;
+
+Minim minim;
+AudioInput in;
+FFT fft;
 
 import java.awt.Font;
 
@@ -5,6 +12,7 @@ GUI_Elements[] knob = new GUI_Elements[3];
 GUI_Elements text = new GUI_Elements(this);
 
 Fourier fourier = new Fourier();
+BeatDetector beatDetect;
 
 String visual  = "freq";
 
@@ -21,19 +29,16 @@ public void settings() {
   String[] args = {"GUI"};
   GUI sa = new GUI();
   PApplet.runSketch(args, sa);
+  
+  beatDetect = new BeatDetector();
+  
 }
 
 void draw() {
-  float x1 = map(knob[0].getKnobValue(), 0, 1, 0, 255);
-  stroke(x1, random(0, 255), random(0, 255));
-
-  if (visual == "freq") {
-    fourier.DrawSpectrum();
-  } else {
-    fourier.DrawArcs();
-  }
-  
-  println(visual);
+  //float x1 = map(knob[0].getKnobValue(), 0, 1, 0, 255);
+  stroke(255);
+  //fourier.DrawArcs();
+  beatDetect.returnBeat();
 } 
 
 public class GUI extends PApplet {
