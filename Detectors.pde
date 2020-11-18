@@ -1,13 +1,9 @@
-BeatDetect beat;
-
-float eRadius;
 
 class Detectors {
 
   Detectors()
   {
     beat = new BeatDetect();
-    eRadius = 20;
   }
 
   Detectors(AudioInput in)

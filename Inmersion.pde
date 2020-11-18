@@ -2,7 +2,7 @@ import ddf.minim.signals.*;
 import ddf.minim.*;
 import ddf.minim.analysis.*;
 import g4p_controls.*;
-
+BeatDetect beat;
 Minim minim;
 AudioInput in;
 FFT fft;
@@ -49,6 +49,9 @@ void draw() {
   case 2:
     fourier.DrawArcs(vColor);
     break;
+  case 3:
+    fourier.DrawLights();
+    break;
   }
 } 
 
@@ -75,7 +78,6 @@ public class GUI extends PApplet {
     //text.createText(intensity,"Intensidad",600,500);
     //text.createText(variation,"Variación",1000,500);
   }
-
 
   public void Elements() {
     //Knobs
@@ -114,14 +116,8 @@ public class GUI extends PApplet {
       actualVisual = 1;
     } else if (button == bt2 && event == GEvent.CLICKED) {
       actualVisual = 2;
-    }
-  }
-
-  void keyPressed() {
-    if (key == 'm') {
-      visual = "freq";
-    } else {
-      visual = "eo";
+    }else if (button == bt3 && event == GEvent.CLICKED) {
+      actualVisual = 3;
     }
   }
 }
