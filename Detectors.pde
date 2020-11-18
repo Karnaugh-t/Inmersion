@@ -1,5 +1,3 @@
-
-
 BeatDetect beat;
 
 float eRadius;
@@ -12,24 +10,21 @@ class Detectors {
     eRadius = 20;
   }
 
+  Detectors(AudioInput in)
+  {
+    beat = new BeatDetect(in.bufferSize(), in.sampleRate());
+    beat.setSensitivity(10); 
+  }
+
+
   void BeatDetector()
   {
     background(0);
-    beat.detect(in.mix);
-    float a = map(eRadius, 20, 80, 60, 255);
-    fill(60, 255, 0, a);
-    
-    if ( beat.isOnset() ) 
-    {
-      eRadius = 80;
-    }
-    ellipse(width/2, height/2, eRadius, eRadius);
-    
-    eRadius *= 0.95;
-    
-    
-    if ( eRadius < 20 ) 
-      eRadius = 20;
-    
+    beat.detect(in.mix); 
+  }
+  
+  boolean KickDetector(){
+    boolean kick = beat.isKick() ? true : false;
+    return kick;
   }
 }

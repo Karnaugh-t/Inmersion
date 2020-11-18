@@ -16,11 +16,16 @@ class Fourier {
     background(0);
     for (int i = 0; i < fft.specSize(); i++)
     {
-      line( i, height, i, height - fft.getBand(i)*30);
+      if(i > 0 && i < 120){
+        stroke(255,0,255);
+      }else{
+      stroke(0,0,255);
+      }
+      line( i * 3, height, i * 3, height - fft.getBand(i)*15);
     }
   }
 
-  void DrawArcs() {
+  void DrawArcs(float intensity) {
     float arcSize = 150;
     float yStep = 10;
     float sw;
@@ -29,14 +34,14 @@ class Fourier {
     background(#eeeeee);
     noFill();
     stroke(20);
-      for (int y = 0; y < height; y+=yStep) {
-        sw = map(sin(radians(y + alpha)), -1, 1, 2, yStep);
-        strokeWeight(sw);
-        for (int x = 0; x < width + arcSize; x+=arcSize) {
-          arc(x, y, arcSize / 2, mouseY / 2, 0, PI);
-          arc(x + arcSize / 2, y, arcSize / 2, arcSize / 2, PI, TWO_PI);
-        }
+    for (int y = 0; y < height; y+=yStep) {
+      sw = map(sin(radians(y + alpha)), -1, 1, 2, yStep);
+      strokeWeight(sw);
+      for (int x = 0; x < width + arcSize; x+=arcSize) {
+        arc(x, y, arcSize /2, arcSize + (fft.getBand(y)*4)/ 2, 0, PI);
+        arc(x + arcSize / 2, y+ (fft.getBand(y)), arcSize/ 2, arcSize+ (fft.getBand(y) * 15) / 2, PI, TWO_PI);
       }
-    alpha+=5;
+    }
+    alpha+=intensity;
   }
 }
