@@ -2,12 +2,15 @@ import ddf.minim.signals.*;
 import ddf.minim.*;
 import ddf.minim.analysis.*;
 import g4p_controls.*;
+
 BeatDetect beat;
 Minim minim;
 AudioInput in;
 FFT fft;
 
 import java.awt.Font;
+
+PImage logo;
 
 GButton bt1;
 GButton bt2;
@@ -34,6 +37,7 @@ Float variation = 0f;
 public void settings() { 
   size(1280, 720, P3D);
   String[] args = {"GUI"};
+  logo = loadImage("logo.png");
   GUI sa = new GUI();
   PApplet.runSketch(args, sa);
 }
@@ -44,13 +48,17 @@ void draw() {
 
   switch(actualVisual) {
   case 1:
-    fourier.DrawSpectrum();
+    fourier.DrawSpectrum(intensity,vColor,variation);
     break;
   case 2:
-    fourier.DrawArcs(vColor);
+    fourier.DrawArcs(intensity,vColor,variation);
     break;
   case 3:
-    fourier.DrawLights();
+    fourier.DrawLights(intensity,vColor,variation);
+    break;
+
+  case 4:
+    fourier.DrawLogo(intensity,vColor,variation);
     break;
   }
 } 
@@ -116,8 +124,10 @@ public class GUI extends PApplet {
       actualVisual = 1;
     } else if (button == bt2 && event == GEvent.CLICKED) {
       actualVisual = 2;
-    }else if (button == bt3 && event == GEvent.CLICKED) {
+    } else if (button == bt3 && event == GEvent.CLICKED) {
       actualVisual = 3;
+    } else if (button == bt4 && event == GEvent.CLICKED) {
+      actualVisual = 4;
     }
   }
 }
