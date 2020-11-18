@@ -4,7 +4,7 @@
 class Fourier {
   float alpha;
   float band;
-  int test = 500;
+  int logoResize = 500;
   float eRadius;
 
   Fourier() {
@@ -15,55 +15,61 @@ class Fourier {
     eRadius = 20;
   }
 
-  void DrawSpectrum(float intensity, float vColor, float variacion) {
+  void DrawSpectrum(float vColor,float intensity , float variacion) {
     fft.forward( in.mix );
     background(0);
     for (int i = 0; i < fft.specSize(); i++)
     {
-      if (i > 0 && i < 120) {
-        stroke(255, 0, 255);
-      } else {
-        stroke(0, 0, 255);
+      if (i > 0 && i <= 120) {          
+        stroke(vColor, 24, 100);
+      } else if(i >= 121 && i < 220){
+        stroke(vColor, 82, 35);
+      }else if(i >= 220 && i < 340){
+        stroke(80,vColor , 0);
+      }else {
+        stroke(30, 15, vColor);
       }
-      line( i * 3, height, i * 3, height - fft.getBand(i)*15);
+      line( i * 3, height, i * 3, height - fft.getBand(i)*intensity);
     }
   }
 
-  void DrawArcs(float intensity, float vColor, float variacion) {
+  void DrawArcs(float vColor, float intensity, float variacion) {
     float arcSize = 150;
     float yStep = 10;
     float sw;
-
+    variacion = map (variacion,1,40,150,300);
+    vColor = vColor / 2;
     fft.forward( in.mix );
     background(#eeeeee);
     noFill();
-    stroke(20);
+    stroke(vColor,vColor*0.55,vColor *1.5);
     for (int y = 0; y < height; y+=yStep) {
       sw = map(sin(radians(y + alpha)), -1, 1, 2, yStep);
       strokeWeight(sw);
       for (int x = 0; x < width + arcSize; x+=arcSize) {
         arc(x, y, arcSize /2, arcSize + (fft.getBand(y)*3)/ 2, 0, PI);
-        arc(x + arcSize / 2, y, arcSize/ 2, arcSize+ (fft.getBand(y) * 15) / 2, PI, TWO_PI);
+        arc(x + arcSize / 2, y, variacion/ 2, arcSize+ (fft.getBand(y) * 15) / 2, PI, TWO_PI);
       }
     }
-    alpha+=intensity;
+    alpha+=intensity / 2;
   }
 
-  void DrawLights(float intensity, float vColor, float variacion) {
+  void DrawLights(float vColor, float intensity, float variacion) {
+    
     background(0);
     beat.detect(in.mix);
     float a = map(eRadius, 20, 80, 60, 255);
-    fill(60, 255, 0, a);
+    fill(vColor, 136, vColor, a);
     if ( beat.isOnset() ) 
     {
-      fill(255, 255, 0, a);
-      eRadius = 45;
+      fill(vColor, 255, vColor, a);
+      eRadius = intensity;
     }
 
     for (int x = 10; x< width; x+=60) {
       for (int y = 28; y< height; y+=60) {
         noStroke();
-        ellipse(x, y, eRadius, eRadius);
+        ellipse(x, y, eRadius, variacion);
       }
     }
 
@@ -74,19 +80,16 @@ class Fourier {
     }
   }
 
-  void DrawLogo(float intensity, float vColor, float variacion) {
+  void DrawLogo(float vColor, float intensity, float variacion) {
     imageMode(CENTER);
-    logo.resize(0, test);
     background(0);
+    logo.resize(0, logoResize);
     beat.detect(in.mix);
-
     image(logo, width / 2, height / 2);
-
     if (beat.isOnset()) {
-      test = int(lerp(test, 600, 0.3));
+      logoResize = int(lerp(logoResize, 600, 0.3));
     } else {
-      test = int(lerp(test, 500, 0.7));
+      logoResize = int(lerp(logoResize, 500, 0.7));
     }
-    println(test);
   }
 }

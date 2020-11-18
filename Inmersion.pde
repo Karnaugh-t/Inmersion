@@ -44,23 +44,23 @@ public void settings() {
 
 void draw() {
   background(0);
-  //float x1 = map(knob[0].getKnobValue(), 0, 1, 0, 255);
 
   switch(actualVisual) {
   case 1:
-    fourier.DrawSpectrum(intensity,vColor,variation);
+    fourier.DrawSpectrum(vColor,intensity,variation);
     break;
   case 2:
-    fourier.DrawArcs(intensity,vColor,variation);
+    fourier.DrawArcs(vColor,intensity,variation);
     break;
   case 3:
-    fourier.DrawLights(intensity,vColor,variation);
+    fourier.DrawLights(vColor,intensity,variation);
     break;
 
   case 4:
-    fourier.DrawLogo(intensity,vColor,variation);
+    fourier.DrawLogo(vColor,intensity,variation);
     break;
   }
+
 } 
 
 public class GUI extends PApplet {
@@ -83,8 +83,9 @@ public class GUI extends PApplet {
     background(bgcol);
     textAlign(CENTER);
     textSize(24);
-    //text.createText(intensity,"Intensidad",600,500);
-    //text.createText(variation,"Variación",1000,500);
+    text("Color: "+vColor ,200,400);
+    text("Intensidad: "+intensity,630,400);
+    text("Variación : "+variation,1050,400);
   }
 
   public void Elements() {
@@ -113,10 +114,13 @@ public class GUI extends PApplet {
 
   public void handleKnobEvents(GValueControl knobs, GEvent event) {
     vColor = knob[0].getKnobValue();
-    vColor = map(vColor, 0, 1, 1, 5);
+    vColor = map(vColor, 0, 1, 1, 255);
 
     intensity = knob[1].getKnobValue();
+    intensity = map(intensity, 0, 1, 30, 40);
+    
     variation = knob[2].getKnobValue();
+    variation = map(variation, 0, 1, 1, 40);
   }
 
   public void handleButtonEvents(GButton button, GEvent event) {
